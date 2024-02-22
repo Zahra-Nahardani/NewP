@@ -1,4 +1,4 @@
-Spotify Dataset 2023
+**Spotify Dataset 2023**
 
 This project is designed to explore the Spotify Dataset 2023 to uncover insights into music trends, artist popularity, and track characteristics. This dataset offers a comprehensive collection of music data, including features such as track popularity, artist information, and audio attributes.  
 
