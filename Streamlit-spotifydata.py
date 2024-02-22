@@ -1,5 +1,4 @@
 #! "C:\Zahra\Uni_Verona\Programming\Project\Programming Project Spotify\Spotify-Project\myenv\Scripts\python.exe"
-
 #_________________________________________________________________________________________________ 
 # import libraries
 import numpy as np
@@ -38,20 +37,20 @@ if selected == 'Data Exploration':
     st.subheader('Display Dataset')
 
     # Print the shape of the DataFrame to get the number of rows and columns.
-    st.write('<b>Shape of Dataset:</b>', spotify_data_df.shape, unsafe_allow_html=True)
+    st.write('<b>Shape of Dataset:</b>', spotify_data_df_copy.shape, unsafe_allow_html=True)
 
     # Display the first and last 5 rows of the DataFrame to get an overview of the data.
     option = st.selectbox('Select an option', ['First 5 rows of the dataset', 'Last 5 rows of the dataset'])
     if option == 'First 5 rows of the dataset':
-        st.write(spotify_data_df.head(5))
+        st.write(spotify_data_df_copy.head(5))
     elif option == 'Last 5 rows of the dataset':
-        st.write(spotify_data_df.tail(5))
+        st.write(spotify_data_df_copy.tail(5))
     
     # Generate descriptive statistics of the numerical columns in the DataFrame.
-    st.write('<b>Dataset describtion</b>', spotify_data_df.describe(), unsafe_allow_html=True)
+    st.write('<b>Dataset describtion</b>', spotify_data_df_copy.describe(), unsafe_allow_html=True)
 
     # Display concise information about the DataFrame, including data types and memory usage.
-    spotify_data_df.info()
+    spotify_data_df_copy.info()
 
 # The number of missing values for each feature
 missing_values = spotify_data_df_copy.isnull().sum()
@@ -121,6 +120,20 @@ if selected == 'Data Exploration':
     if selected_track_popularity is not None:
         selected_rows = spotify_data_df_copy[spotify_data_df_copy['track_popularity'] == selected_track_popularity]
         st.write(selected_rows)
+
+# Filter based on track release year
+
+if selected == 'Data Exploration':
+    st.write('<b>Filter by release year</b>', unsafe_allow_html=True)
+    release_year = st.number_input('Enter the year:', 
+                                   min_value=int(spotify_data_df_copy['release_year'].min()),
+                                   max_value=int(spotify_data_df_copy['release_year'].max()), 
+                                   )
+    release_year = int(release_year)
+    filtered_data_by_year = spotify_data_df_copy[spotify_data_df_copy['release_year'] == release_year]
+    most_popular_track = filtered_data_by_year.nlargest(1, 'track_popularity')[['track_name', 'artist_0', 'track_popularity']]
+    st.write(f"Most popular track in {release_year}:")
+    st.write(most_popular_track)
 #__________________________________________________________________________________________________________ 
  
 # Count the number of unique genres in the 'genre_0' column
